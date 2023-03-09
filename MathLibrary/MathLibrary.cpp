@@ -62,7 +62,6 @@ void recursiveMkdir(const std::string& name, const std::string& surname)
 
 void recursiveRm(const std::string& path)
 {
-	std::cout << "Remove folder: ";
 	system(("rmdir /s /q " + path).c_str());
 	std::cout << "Finished removing useless folders.\n";
 }
@@ -94,6 +93,9 @@ void solveTschirnhausenCubic(const double& F, const double& x0, const double& xn
 	int i = 1, j = 1;
 	for (auto curx = x0; curx <= xn; curx += deltax)
 	{
+		double tempy = tschirnhausenCubic(curx, F);
+		if (tempy != tempy) continue;
+
 		std::string filename = lastname + "\\" + firstname + std::to_string(i) + "\\" + firstname + std::to_string(i) + firstname + std::to_string(j) + "\\solutions.txt";
 		outputFile.open(filename, std::ios::app);
 		if (!outputFile.good()) {
@@ -101,7 +103,6 @@ void solveTschirnhausenCubic(const double& F, const double& x0, const double& xn
 			return;
 		}
 
-		double tempy = tschirnhausenCubic(curx, F);
 		if (BE_VERBOSE) std::cout << "Folder ID: " << i << " " << j << ", current x: " << curx << " function value: " << tempy << std::endl;
 		outputFile << curx << " " << tempy << std::endl;
 		incrementFolderPositions(i, j);
