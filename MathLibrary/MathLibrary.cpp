@@ -71,50 +71,41 @@ double tschirnhausenCubic(const double& x, const double& F) {
 	return sqrt(pow(x, 3) + 3 * pow(x, 2) - F);
 }
 
-void incrementFolderPositions(int& i, int& j) {
-	if (j < 3) {
-		j++;
-	}
-	else if (j == 3 && i < 3) {
-		i++;
-		j = 1;
-	}
-	else {
-		i = 1;
-		j = 1;
-	}
-}
-
 void solveTschirnhausenCubic(const double& F, const double& x0, const double& xn, const double& deltax,
 	const std::string& firstname, const std::string& lastname, const bool& BE_VERBOSE)
 {
-	std::ofstream outputFile;
+	// Open all 9 files at the same time
+	std::vector<std::ofstream> files;
+	for (int i = 1; i <= 3; i++) {
+		for (int j = 1; j <= 3; j++) {
+			std::string filename = lastname + "\\" + firstname + std::to_string(i) + "\\" + firstname + std::to_string(i) + firstname + std::to_string(j) + "\\solutions.txt";
+			files.emplace_back();
+			files.at((i - 1) * 3 + (j - 1)).open(filename);
+		}
+	}
 
-	int i = 1, j = 1;
+	int i = 0;
 	for (auto curx = x0; curx <= xn; curx += deltax)
 	{
 		double tempy = tschirnhausenCubic(curx, F);
 		if (tempy != tempy) continue;
 
-		std::string filename = lastname + "\\" + firstname + std::to_string(i) + "\\" + firstname + std::to_string(i) + firstname + std::to_string(j) + "\\solutions.txt";
-		outputFile.open(filename, std::ios::app);
-		if (!outputFile.good()) {
-			std::cout << "No such file " << filename << std::endl;
-			return;
-		}
+		if (BE_VERBOSE) std::cout << "Folder ID: " << i << ", current x: " << curx << " function value: " << tempy << std::endl;
+		files.at(i) << curx << " " << tempy << std::endl;
+		i = (i + 1) % 9;
 
-		if (BE_VERBOSE) std::cout << "Folder ID: " << i << " " << j << ", current x: " << curx << " function value: " << tempy << std::endl;
-		outputFile << curx << " " << tempy << std::endl;
-		incrementFolderPositions(i, j);
 		// Every solution has two roots except for zero
 		if (tempy != 0) {
-			if (BE_VERBOSE) std::cout << "Folder ID: " << i << " " << j << ", current x: " << curx << " function value: " << -tempy << std::endl;
-			outputFile << curx << " " << -tempy << std::endl;
-			incrementFolderPositions(i, j);
+			if (BE_VERBOSE) std::cout << "Folder ID: " << i << ", current x: " << curx << " function value: " << -tempy << std::endl;
+			files.at(i) << curx << " " << -tempy << std::endl;
+			i = (i + 1) % 9;
 		}
-
-		outputFile.close();
 	}
+
+	// Close files
+	std::for_each(files.begin(), files.end(), [](std::ofstream& obj) {
+		obj.close();
+	});
 }
 
 // Returns 1 if failed and 0 if successful
