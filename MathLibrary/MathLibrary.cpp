@@ -14,6 +14,7 @@
 #include <algorithm>
 #include <vector>
 #include <string>
+#include <array>
 #include <windows.h>
 #include "MathLibrary.h"
 
@@ -75,37 +76,36 @@ void solveTschirnhausenCubic(const double& F, const double& x0, const double& xn
 	const std::string& firstname, const std::string& lastname, const bool& BE_VERBOSE)
 {
 	// Open all 9 files at the same time
-	std::vector<std::ofstream> files;
+	std::array<std::ofstream, 9> files;
 	for (int i = 1; i <= 3; i++) {
 		for (int j = 1; j <= 3; j++) {
 			std::string filename = lastname + "\\" + firstname + std::to_string(i) + "\\" + firstname + std::to_string(i) + firstname + std::to_string(j) + "\\solutions.txt";
-			files.emplace_back();
-			files.at((i - 1) * 3 + (j - 1)).open(filename);
+			files[(i - 1) * 3 + (j - 1)].open(filename);
 		}
 	}
 
 	int i = 0;
-	for (auto curx = x0; curx <= xn; curx += deltax)
+	for (double curx = x0; curx <= xn; curx += deltax)
 	{
 		double tempy = tschirnhausenCubic(curx, F);
 		if (tempy != tempy) continue;
 
-		if (BE_VERBOSE) std::cout << "Folder ID: " << i << ", current x: " << curx << " function value: " << tempy << std::endl;
-		files.at(i) << curx << " " << tempy << std::endl;
-		i = (i + 1) % 9;
+		if (BE_VERBOSE) std::cout << "Folder ID: " << i << ", current x: " << curx << " function value: " << tempy << '\n';
+		files[i] << curx << ' ' << tempy << '\n';
+		i = (i == 8) ? 0 : i + 1;
 
 		// Every solution has two roots except for zero
 		if (tempy != 0) {
-			if (BE_VERBOSE) std::cout << "Folder ID: " << i << ", current x: " << curx << " function value: " << -tempy << std::endl;
-			files.at(i) << curx << " " << -tempy << std::endl;
-			i = (i + 1) % 9;
+			if (BE_VERBOSE) std::cout << "Folder ID: " << i << ", current x: " << curx << " function value: " << -tempy << '\n';
+			files[i] << curx << ' ' << -tempy << '\n';
+			i = (i == 8) ? 0 : i + 1;
 		}
 	}
 
 	// Close files
-	std::for_each(files.begin(), files.end(), [](std::ofstream& obj) {
-		obj.close();
-	});
+	for (auto& file : files) {
+		file.close();
+	}
 }
 
 // Returns 1 if failed and 0 if successful
