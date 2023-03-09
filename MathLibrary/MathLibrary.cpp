@@ -76,13 +76,7 @@ void solveTschirnhausenCubic(const double& F, const double& x0, const double& xn
 	const std::string& firstname, const std::string& lastname, const bool& BE_VERBOSE)
 {
 	// Open all 9 files at the same time
-	std::array<std::ofstream, 9> files;
-	for (int i = 1; i <= 3; i++) {
-		for (int j = 1; j <= 3; j++) {
-			std::string filename = lastname + "\\" + firstname + std::to_string(i) + "\\" + firstname + std::to_string(i) + firstname + std::to_string(j) + "\\solutions.txt";
-			files[(i - 1) * 3 + (j - 1)].open(filename);
-		}
-	}
+	std::array<std::stringstream, 9> buffers;
 
 	int i = 0;
 	for (double curx = x0; curx <= xn; curx += deltax)
@@ -91,20 +85,24 @@ void solveTschirnhausenCubic(const double& F, const double& x0, const double& xn
 		if (tempy != tempy) continue;
 
 		if (BE_VERBOSE) std::cout << "Folder ID: " << i << ", current x: " << curx << " function value: " << tempy << '\n';
-		files[i] << curx << ' ' << tempy << '\n';
+		buffers[i] << curx << ' ' << tempy << '\n';
 		i = (i == 8) ? 0 : i + 1;
 
 		// Every solution has two roots except for zero
 		if (tempy != 0) {
 			if (BE_VERBOSE) std::cout << "Folder ID: " << i << ", current x: " << curx << " function value: " << -tempy << '\n';
-			files[i] << curx << ' ' << -tempy << '\n';
+			buffers[i] << curx << ' ' << -tempy << '\n';
 			i = (i == 8) ? 0 : i + 1;
 		}
 	}
 
-	// Close files
-	for (auto& file : files) {
-		file.close();
+	for (int i = 1; i <= 3; i++) {
+		for (int j = 1; j <= 3; j++) {
+			std::string filename = lastname + "\\" + firstname + std::to_string(i) + "\\" + firstname + std::to_string(i) + firstname + std::to_string(j) + "\\solutions.txt";
+			std::ofstream file(filename);
+			file << buffers[i].str(); // write buffer to file
+			file.close();
+		}
 	}
 }
 
@@ -151,6 +149,7 @@ int sortResults(const std::string& filePrefix)
 	}
 	std::vector<Point> points;
 	Point temp{};
+	// TODO: I don't need to read the file here. It is really slow.
 	while (inputFile >> temp.x >> temp.y) {
 		points.push_back(temp);
 	}
@@ -163,7 +162,7 @@ int sortResults(const std::string& filePrefix)
 	std::stringstream ss;
 	for (const auto& p : points)
 	{
-		ss << p.x << " " << p.y << std::endl;
+		ss << p.x << " " << p.y << '\n';
 	}
 
 	// Write sorted results to a file
