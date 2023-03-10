@@ -72,7 +72,7 @@ void familyControlVec(const std::string& username, std::vector<std::string>& day
 // Task 3
 void recursiveRm(const std::string& path)
 {
-	system(("rmdir /s /q " + path).c_str());
+	system(("rmdir /s /q " + path + " 2>nul").c_str());
 }
 
 void recursiveMkdir(const std::string& name, const std::string& surname)

@@ -5,6 +5,8 @@ VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "MathLibrary", "MathLibrary\MathLibrary.vcxproj", "{7576BD28-25DB-4C35-8903-DD15F267DA7A}"
 EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupDLL", "SetupDLL\SetupDLL.vdproj", "{25F2A261-EEE6-485E-B507-2E8CD74229D4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64
@@ -21,6 +23,10 @@ Global
 		{7576BD28-25DB-4C35-8903-DD15F267DA7A}.Release|x64.Build.0 = Release|x64
 		{7576BD28-25DB-4C35-8903-DD15F267DA7A}.Release|x86.ActiveCfg = Release|Win32
 		{7576BD28-25DB-4C35-8903-DD15F267DA7A}.Release|x86.Build.0 = Release|Win32
+		{25F2A261-EEE6-485E-B507-2E8CD74229D4}.Debug|x64.ActiveCfg = Debug
+		{25F2A261-EEE6-485E-B507-2E8CD74229D4}.Debug|x86.ActiveCfg = Debug
+		{25F2A261-EEE6-485E-B507-2E8CD74229D4}.Release|x64.ActiveCfg = Release
+		{25F2A261-EEE6-485E-B507-2E8CD74229D4}.Release|x86.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
