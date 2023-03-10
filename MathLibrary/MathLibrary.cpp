@@ -131,7 +131,7 @@ void solveTschirnhausenCubic(const double& F, const double& x0, const double& xn
 		for (int j = 1; j <= 3; j++) {
 			std::string filename = lastname + "\\" + firstname + std::to_string(i) + "\\" + firstname + std::to_string(i) + firstname + std::to_string(j) + "\\solutions.txt";
 			std::ofstream file(filename);
-			file << buffers[i].str(); // write buffer to file
+			file << buffers[(i - 1) * 3 + (j - 1)].str(); // write buffer to file
 			file.close();
 		}
 	}
