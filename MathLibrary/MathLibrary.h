@@ -6,7 +6,7 @@
 #define EXPORT __declspec(dllimport)
 #endif
 
-// Laiko matavimo klase
+// Laiko matavimo klase (Task 1)
 class Timer {
 private:
 	std::chrono::time_point<std::chrono::high_resolution_clock> start;
@@ -24,6 +24,8 @@ public:
 };
 
 EXPORT void familyControl(const std::string& username, const std::string& day, const std::string& time);
+
+EXPORT void familyControlVec(const std::string& username, std::vector<std::string>& day, std::vector<std::string>& time);
 
 EXPORT void recursiveMkdir(const std::string& name, const std::string& surname);
 

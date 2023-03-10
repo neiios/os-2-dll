@@ -21,6 +21,7 @@
 // Declare helpers
 bool IsAdmin();
 
+// Task 2.1
 // Studento numeris: 2110269 % 3 = 0 + 1 = 1
 void familyControl(const std::string& username, const std::string& day, const std::string& time)
 {
@@ -40,11 +41,47 @@ void familyControl(const std::string& username, const std::string& day, const st
 	system("net user vaikas");
 }
 
+void familyControlVec(const std::string& username, std::vector<std::string>& day, std::vector<std::string>& time)
+{
+	if (!IsAdmin()) {
+		std::cout << "The program is not running as an adminstrator. You won't be able to use family control. Run the program as an administrator.\n";
+		system("pause");
+		exit(1);
+	}
+
+	if (day.size() != time.size()) {
+		std::cout << "Both vectors should have the same size.\n";
+		system("pause");
+		exit(1);
+	}
+
+	std::string datetime = "";
+	for (int i = 0; i < day.size(); i++) {
+		datetime = datetime + day.at(i) + "," + time.at(i) + ";";
+	}
+
+	std::string command = "net user " + username + " /time:" + datetime;
+	std::cout << "The comand that will be run: " << command << std::endl;
+
+	// Actually run commands
+	system("net user vaikas");
+	system(command.c_str());
+	system("net user vaikas");
+}
+
 // Task 3
+void recursiveRm(const std::string& path)
+{
+	system(("rmdir /s /q " + path).c_str());
+}
+
 void recursiveMkdir(const std::string& name, const std::string& surname)
 {
 	// Create root "PAVARDENIS" folder
 	std::string rootFolder = surname;
+
+	recursiveRm(rootFolder); // Remove the folder if it exists already
+
 	system(("mkdir " + rootFolder).c_str());
 
 	for (int i = 1; i <= 3; i++) {
@@ -59,12 +96,6 @@ void recursiveMkdir(const std::string& name, const std::string& surname)
 			system(("mkdir " + secondNest).c_str());
 		}
 	}
-}
-
-void recursiveRm(const std::string& path)
-{
-	system(("rmdir /s /q " + path).c_str());
-	std::cout << "Finished removing useless folders.\n";
 }
 
 // Task 4
@@ -106,7 +137,7 @@ void solveTschirnhausenCubic(const double& F, const double& x0, const double& xn
 	}
 }
 
-// Returns 1 if failed and 0 if successful
+// Task 5
 int concatFiles(const std::string& name, const std::string& surname, const std::string& prefix)
 {
 	std::ifstream solutionsFile;
