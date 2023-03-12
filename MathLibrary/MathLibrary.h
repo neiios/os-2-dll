@@ -23,8 +23,6 @@ public:
 	}
 };
 
-EXPORT void familyControl(const std::string& username, const std::string& day, const std::string& time);
-
 EXPORT void familyControlVec(const std::string& username, std::vector<std::string>& day, std::vector<std::string>& time);
 
 EXPORT void recursiveMkdir(const std::string& name, const std::string& surname);

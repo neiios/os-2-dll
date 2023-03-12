@@ -37,6 +37,14 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+            }
         }
         "Release"
         {
@@ -53,6 +61,22 @@
         "PrivateKeyFile" = "8:"
         "TimeStampServer" = "8:"
         "InstallerBootstrapper" = "3:2"
+            "BootstrapperCfg:{63ACBE69-63AA-4F98-B2B6-99F9E24495F2}"
+            {
+            "Enabled" = "11:TRUE"
+            "PromptEnabled" = "11:TRUE"
+            "PrerequisitesLocation" = "2:1"
+            "Url" = "8:"
+            "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
+            }
         }
     }
     "Deployable"
@@ -113,7 +137,7 @@
             }
             "{3C67513D-01DD-4637-8A68-80971EB9504F}:_5335DE4408C64836B785DF2AF8FFA962"
             {
-            "DefaultLocation" = "8:C:\\Program Files\\OS2"
+            "DefaultLocation" = "8:C:\\Windows\\System32"
             "Name" = "8:#1925"
             "AlwaysCreate" = "11:FALSE"
             "Condition" = "8:"
@@ -149,9 +173,9 @@
         "Product"
         {
         "Name" = "8:Microsoft Visual Studio"
-        "ProductName" = "8:OS2"
+        "ProductName" = "8:OS2-dll"
         "ProductCode" = "8:{72D2BD76-048E-4548-A991-BDC58E5D5A89}"
-        "PackageCode" = "8:{FD6580E3-20D1-4E20-B87C-822E6603FD3B}"
+        "PackageCode" = "8:{3BAE3A91-21C8-415D-90D1-80E7BAB4B724}"
         "UpgradeCode" = "8:{3328AB71-08CB-4F02-90A0-9C7CA0AECFDE}"
         "AspNetVersion" = "8:"
         "RestartWWWService" = "11:FALSE"
@@ -164,7 +188,7 @@
         "ARPHELPLINK" = "8:"
         "Title" = "8:SetupDLL"
         "Subject" = "8:"
-        "ARPCONTACT" = "8:Maurice \"Zuikis\" Jackson"
+        "ARPCONTACT" = "8:Maurice"
         "Keywords" = "8:"
         "ARPCOMMENTS" = "8:"
         "ARPURLINFOABOUT" = "8:"

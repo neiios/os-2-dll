@@ -23,30 +23,13 @@ bool IsAdmin();
 
 // Task 2.1
 // Studento numeris: 2110269 % 3 = 0 + 1 = 1
-void familyControl(const std::string& username, const std::string& day, const std::string& time)
-{
-	if (!IsAdmin()) {
-		std::cout << "The program is not running as an adminstrator. You won't be able to use family control. Run the program as an administrator.\n";
-		system("pause");
-		exit(1);
-	}
-
-	//net user user01 /time:M-Su,18:00-20:00
-	std::string command = "net user " + username + " /time:" + day + "," + time;
-	//command = command + username + " /time:" + day + "," + time;
-	std::cout << "The comand that will be run: " << command << std::endl;
-
-	system("net user vaikas");
-	system(command.c_str());
-	system("net user vaikas");
-}
-
 void familyControlVec(const std::string& username, std::vector<std::string>& day, std::vector<std::string>& time)
 {
 	if (!IsAdmin()) {
-		std::cout << "The program is not running as an adminstrator. You won't be able to use family control. Run the program as an administrator.\n";
-		system("pause");
-		exit(1);
+		std::cout << "The program is not running as an adminstrator.\n"
+			<< "You won't be able to use family control.\n"
+			<< "Run the program as an administrator for this step to work.\n";
+		return;
 	}
 
 	if (day.size() != time.size()) {
@@ -127,8 +110,8 @@ void solveTschirnhausenCubic(const double& F, const double& x0, const double& xn
 		}
 	}
 
-	for (int i = 1; i <= 3; i++) {
-		for (int j = 1; j <= 3; j++) {
+	for (int64_t i = 1; i <= 3; i++) {
+		for (int64_t j = 1; j <= 3; j++) {
 			std::string filename = lastname + "\\" + firstname + std::to_string(i) + "\\" + firstname + std::to_string(i) + firstname + std::to_string(j) + "\\solutions.txt";
 			std::ofstream file(filename);
 			file << buffers[(i - 1) * 3 + (j - 1)].str(); // write buffer to file
